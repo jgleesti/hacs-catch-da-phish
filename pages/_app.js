@@ -33,6 +33,16 @@ function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={currentTheme}>
       <CssBaseline />
+      <ToggleButton
+        value="check"
+        onChange={() => {
+          setCurrentTheme(
+            currentTheme.palette.mode === "dark" ? lightTheme : darkTheme
+          );
+        }}
+      >
+        Theme
+      </ToggleButton>
       <Component {...pageProps} />
     </ThemeProvider>
   );
