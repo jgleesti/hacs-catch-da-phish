@@ -30,6 +30,8 @@ const style = (theme) => ({
   borderRadius: 8,
   boxShadow: 24,
   p: 4,
+  maxHeight: '100vh',
+  overflow: 'auto',
   [theme.breakpoints.up("md")]: {
     width: 850,
   },
@@ -38,7 +40,7 @@ const style = (theme) => ({
   },
 });
 
-const Email = ({ email, onSuccess, onFailure, emailNumber, totalEmails }) => {
+const Email = ({ email, onSuccess, onFailure, emailNumber, totalEmails, onClose }) => {
   const isNotPhish = () => {
     if (email.isPhish) {
       onFailure();
@@ -57,7 +59,7 @@ const Email = ({ email, onSuccess, onFailure, emailNumber, totalEmails }) => {
 
   return (
     <Box sx={style}>
-      <Toolbar emailNumber={emailNumber} totalEmails={totalEmails} />
+      <Toolbar emailNumber={emailNumber} totalEmails={totalEmails} onClose={onClose} />
       <SubjectLine subject={email.subject} />
 
       <SendingDetails

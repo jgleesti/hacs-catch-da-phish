@@ -15,6 +15,7 @@ import LabelOutlinedIcon from "@mui/icons-material/LabelOutlined";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import ReportGmailerrorredOutlinedIcon from "@mui/icons-material/ReportGmailerrorredOutlined";
 import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
 
 import { useTheme } from "@mui/material/styles";
 
@@ -24,9 +25,6 @@ const iconGroupStyle = {
   width: "fit-content",
   bgcolor: "background.paper",
   color: "text.secondary",
-  "& svg": {
-    m: 1.5,
-  },
   "& hr": {
     mx: 0.5,
   },
@@ -38,50 +36,81 @@ const containerStyle = (theme) => ({
   marginBottom: 3,
 });
 
-const Toolbar = ({ emailNumber, totalEmails }) => {
+const Toolbar = ({ emailNumber, totalEmails, onClose }) => {
   const theme = useTheme();
   console.log(theme.breakpoints.up("md"));
 
   return (
     <Box sx={containerStyle}>
       <Box sx={iconGroupStyle}>
-        <ArrowBackOutlinedIcon
-          fontSize="small"
-          sx={{ ml: { md: "12px !important", sm: "0 !important", xs: "0 !important" } }}
-        />
-        <ArchiveOutlinedIcon fontSize="small" />
-        <ReportGmailerrorredOutlinedIcon fontSize="small" />
-        <DeleteOutlineOutlinedIcon fontSize="small" />
+        <IconButton
+          onClick={onClose}
+          size="small"
+          sx={{
+            mr: "13px",
+          }}
+        >
+          <ArrowBackOutlinedIcon />
+        </IconButton>
+        <IconButton size="small">
+          <ArchiveOutlinedIcon fontSize="small" />
+        </IconButton>
+        <IconButton size="small">
+          <ReportGmailerrorredOutlinedIcon fontSize="small" />
+        </IconButton>
+        <IconButton size="small">
+          <DeleteOutlineOutlinedIcon fontSize="small" />
+        </IconButton>
 
         <Box sx={{ display: { md: "inherit", sm: "none", xs: "none" } }}>
           <Divider orientation="vertical" variant="middle" flexItem />
-          <EmailOutlinedIcon fontSize="small" />
-          <AccessTimeOutlinedIcon fontSize="small" />
-          <AddTaskOutlinedIcon fontSize="small" />
+          <IconButton size="small">
+            <EmailOutlinedIcon fontSize="small" />
+          </IconButton>
+          <IconButton size="small">
+            <AccessTimeOutlinedIcon fontSize="small" />
+          </IconButton>
+          <IconButton size="small">
+            <AddTaskOutlinedIcon fontSize="small" />
+          </IconButton>
         </Box>
         <Box sx={{ display: { md: "inherit", sm: "inherit", xs: "none" } }}>
           <Divider orientation="vertical" variant="middle" flexItem />
-          <DriveFileMoveOutlinedIcon fontSize="small" />
-          <LabelOutlinedIcon fontSize="small" />
+          <IconButton size="small">
+            <DriveFileMoveOutlinedIcon fontSize="small" />
+          </IconButton>
+          <IconButton size="small">
+            <LabelOutlinedIcon fontSize="small" />
+          </IconButton>
         </Box>
-        <MoreVertOutlinedIcon fontSize="small" />
+        <IconButton size="small">
+          <MoreVertOutlinedIcon fontSize="small" />
+        </IconButton>
       </Box>
       <Box sx={iconGroupStyle}>
         <Typography>{`${emailNumber || 0} of ${totalEmails | 0}`}</Typography>
-        <ChevronLeftOutlinedIcon
-          fontSize="small"
-          sx={{ display: { md: "inherit", sm: "inherit", xs: "none" } }}
-        />
-        <ChevronRightOutlinedIcon
-          fontSize="small"
-          sx={{ display: { md: "inherit", sm: "inherit", xs: "none" } }}
-        />
-        <Box sx={{ display: { md: "inherit", sm: "none", xs: "none" } }}>
-          <KeyboardOutlinedIcon fontSize="small" style={{ marginRight: 0 }} />
-          <ArrowDropDownOutlinedIcon
+        <IconButton size="small">
+          <ChevronLeftOutlinedIcon
             fontSize="small"
-            style={{ marginLeft: 0 }}
+            sx={{ display: { md: "inherit", sm: "inherit", xs: "none" } }}
           />
+        </IconButton>
+        <IconButton size="small">
+          <ChevronRightOutlinedIcon
+            fontSize="small"
+            sx={{ display: { md: "inherit", sm: "inherit", xs: "none" } }}
+          />
+        </IconButton>
+        <Box sx={{ display: { md: "inherit", sm: "none", xs: "none" } }}>
+          <IconButton size="small">
+            <KeyboardOutlinedIcon fontSize="small" style={{ marginRight: 0 }} />
+          </IconButton>
+          <IconButton size="small">
+            <ArrowDropDownOutlinedIcon
+              fontSize="small"
+              style={{ marginLeft: 0 }}
+            />
+          </IconButton>
         </Box>
       </Box>
     </Box>

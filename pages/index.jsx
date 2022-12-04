@@ -60,6 +60,9 @@ export default function Home({ emails }) {
                 emailNumber={emailIndex + 1}
                 totalEmails={emails.length}
                 email={emails[emailIndex].fields}
+                onClose={() => {
+                  setShowEmail(false);
+                }}
                 onSuccess={() => {
                   setCurrentScore(currentScore + 10);
                   nextEmail();
