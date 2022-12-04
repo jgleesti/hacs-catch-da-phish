@@ -1,18 +1,18 @@
 import { useState } from "react";
 import Head from "next/head";
-import Image from "next/image";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import Email from "../components/gmail/email";
+const contentful = require("contentful");
 
-export default function Home() {
+
+export default function Home({ emails }) {
   const [showEmail, setShowEmail] = useState(false);
-  const [email, setEmail] = useState({
-    from: "John",
-    subject: "Hello",
-    message: "How are you?",
-  });
+  const [currentScore, setCurrentScore] = useState(0);
+  const [email, setEmail] = useState({});
+  const [emailIndex, setEmailIndex] = useState(0);
+
 
   return (
     <Container maxWidth="xl">
@@ -30,7 +30,7 @@ export default function Home() {
         <Typography variant="h2">
           An educational tool for Cyber Hygiene
         </Typography>
-        <Typography variant="h3">Total Score: 50</Typography>
+        <Typography variant="h3">Total Score: {currentScore}</Typography>
         <Button
           variant="contained"
           onClick={() => {
@@ -39,8 +39,35 @@ export default function Home() {
         >
           Start
         </Button>
-        {showEmail && <Email email={email} onClose={() => {setShowEmail(false)}} />}
+        {showEmail && (
+          <Email
+            email={emails[emailIndex].fields}
+            onClose={() => {
+              setShowEmail(false);
+            }}
+            onSuccess={() => {
+              setCurrentScore(currentScore + 10);
+            }}
+            onFailure={() => {
+              setCurrentScore(currentScore - 10);
+            }}
+          />
+        )}
       </main>
     </Container>
   );
+}
+
+export async function getStaticProps() {
+  const client = contentful.createClient({
+    space: process.env.CONTENTFUL_SPACE_ID,
+    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+  });
+
+  const res = await client.getEntries({ content_type: "email" });
+  return {
+    props: {
+      emails: res.items,
+    },
+  };
 }
