@@ -29,7 +29,7 @@ export default function Home({ emails }) {
         <title>Spot da phish</title>
         <meta
           name="description"
-          content="Taltech Humans Aspects of Cyber Security Assignment Four. An educational tool for cyber cygiene"
+          content="Taltech Humans Aspects of Cyber Security Assignment Four. An educational tool for cyber hygiene"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
