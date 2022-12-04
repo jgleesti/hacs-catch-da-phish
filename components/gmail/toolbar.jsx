@@ -16,6 +16,8 @@ import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import ReportGmailerrorredOutlinedIcon from "@mui/icons-material/ReportGmailerrorredOutlined";
 import Typography from "@mui/material/Typography";
 
+import { useTheme } from "@mui/material/styles";
+
 const iconGroupStyle = {
   display: "flex",
   alignItems: "center",
@@ -30,35 +32,57 @@ const iconGroupStyle = {
   },
 };
 
-const containerStyle = {
+const containerStyle = (theme) => ({
   display: "flex",
   justifyContent: "space-between",
   marginBottom: 3,
-};
+});
 
 const Toolbar = ({ emailNumber, totalEmails }) => {
+  const theme = useTheme();
+  console.log(theme.breakpoints.up("md"));
+
   return (
     <Box sx={containerStyle}>
       <Box sx={iconGroupStyle}>
-        <ArrowBackOutlinedIcon fontSize="small" xs={{ marginRight: 3 }} />
+        <ArrowBackOutlinedIcon
+          fontSize="small"
+          sx={{ ml: { md: "12px !important", sm: "0 !important", xs: "0 !important" } }}
+        />
         <ArchiveOutlinedIcon fontSize="small" />
         <ReportGmailerrorredOutlinedIcon fontSize="small" />
         <DeleteOutlineOutlinedIcon fontSize="small" />
-        <Divider orientation="vertical" variant="middle" flexItem />
-        <EmailOutlinedIcon fontSize="small" />
-        <AccessTimeOutlinedIcon fontSize="small" />
-        <AddTaskOutlinedIcon fontSize="small" />
-        <Divider orientation="vertical" variant="middle" flexItem />
-        <DriveFileMoveOutlinedIcon fontSize="small" />
-        <LabelOutlinedIcon fontSize="small" />
+
+        <Box sx={{ display: { md: "inherit", sm: "none", xs: "none" } }}>
+          <Divider orientation="vertical" variant="middle" flexItem />
+          <EmailOutlinedIcon fontSize="small" />
+          <AccessTimeOutlinedIcon fontSize="small" />
+          <AddTaskOutlinedIcon fontSize="small" />
+        </Box>
+        <Box sx={{ display: { md: "inherit", sm: "inherit", xs: "none" } }}>
+          <Divider orientation="vertical" variant="middle" flexItem />
+          <DriveFileMoveOutlinedIcon fontSize="small" />
+          <LabelOutlinedIcon fontSize="small" />
+        </Box>
         <MoreVertOutlinedIcon fontSize="small" />
       </Box>
       <Box sx={iconGroupStyle}>
         <Typography>{`${emailNumber || 0} of ${totalEmails | 0}`}</Typography>
-        <ChevronLeftOutlinedIcon fontSize="small" />
-        <ChevronRightOutlinedIcon fontSize="small" />
-        <KeyboardOutlinedIcon fontSize="small" style={{ marginRight: 0 }} />
-        <ArrowDropDownOutlinedIcon fontSize="small" style={{ marginLeft: 0 }} />
+        <ChevronLeftOutlinedIcon
+          fontSize="small"
+          sx={{ display: { md: "inherit", sm: "inherit", xs: "none" } }}
+        />
+        <ChevronRightOutlinedIcon
+          fontSize="small"
+          sx={{ display: { md: "inherit", sm: "inherit", xs: "none" } }}
+        />
+        <Box sx={{ display: { md: "inherit", sm: "none", xs: "none" } }}>
+          <KeyboardOutlinedIcon fontSize="small" style={{ marginRight: 0 }} />
+          <ArrowDropDownOutlinedIcon
+            fontSize="small"
+            style={{ marginLeft: 0 }}
+          />
+        </Box>
       </Box>
     </Box>
   );

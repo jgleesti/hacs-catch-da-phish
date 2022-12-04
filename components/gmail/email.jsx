@@ -1,16 +1,17 @@
 import { BLOCKS, MARKS } from "@contentful/rich-text-types";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
 import ReplyIcon from "@mui/icons-material/Reply";
 import ForwardIcon from "@mui/icons-material/Forward";
+
 import SubjectLine from "./subject-line";
 import Toolbar from "./toolbar";
 import SendingDetails from "./sending-details";
-const options = {
+
+const renderOptions = {
   renderMark: {
     [MARKS.BOLD]: (text) => <strong>{text}</strong>,
   },
@@ -31,6 +32,9 @@ const style = (theme) => ({
   p: 4,
   [theme.breakpoints.up("md")]: {
     width: 850,
+  },
+  [theme.breakpoints.down("md")]: {
+    width: '100%',
   },
 });
 
@@ -54,16 +58,15 @@ const Email = ({ email, onSuccess, onFailure, emailNumber, totalEmails }) => {
   return (
     <Box sx={style}>
       <Toolbar emailNumber={emailNumber} totalEmails={totalEmails} />
-
       <SubjectLine subject={email.subject} />
 
       <SendingDetails
         fromName={email.fromName}
         fromAddress={email.fromAddress}
-      />
+        />
 
-      <Box style={{ marginLeft: "3.4em" }}>
-        {documentToReactComponents(email.body, options)}
+      <Box style={{ marginLeft: "3.4em", marginBottom: "2em" }}>
+        {documentToReactComponents(email.body, renderOptions)}
         <Box>
           <Button
             variant="outlined"
@@ -73,19 +76,22 @@ const Email = ({ email, onSuccess, onFailure, emailNumber, totalEmails }) => {
               marginRight: "1em",
               textTransform: "none",
             }}
-          >
+            >
             Reply
           </Button>
           <Button
             variant="outlined"
             startIcon={<ForwardIcon />}
             style={{ borderRadius: "25px", textTransform: "none" }}
-          >
+            >
             Forward
           </Button>
         </Box>
       </Box>
 
+      <hr />
+
+            
       <Box
         sx={{
           display: "flex",

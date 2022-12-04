@@ -18,6 +18,7 @@ export default function Home({ emails }) {
     if (newIndex < emails.length) {
       setEmailIndex(emailIndex + 1);
     } else {
+      setShowEmail(false);
       setEmailIndex(0);
     }
   };
