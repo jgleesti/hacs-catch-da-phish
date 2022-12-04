@@ -6,13 +6,10 @@ import { Button } from "@mui/material";
 import Email from "../components/gmail/email";
 const contentful = require("contentful");
 
-
 export default function Home({ emails }) {
   const [showEmail, setShowEmail] = useState(false);
   const [currentScore, setCurrentScore] = useState(0);
-  const [email, setEmail] = useState({});
   const [emailIndex, setEmailIndex] = useState(0);
-
 
   return (
     <Container maxWidth="xl">
@@ -47,9 +44,11 @@ export default function Home({ emails }) {
             }}
             onSuccess={() => {
               setCurrentScore(currentScore + 10);
+              setEmailIndex(emailIndex + 1);
             }}
             onFailure={() => {
               setCurrentScore(currentScore - 10);
+              setEmailIndex(emailIndex + 1);
             }}
           />
         )}
