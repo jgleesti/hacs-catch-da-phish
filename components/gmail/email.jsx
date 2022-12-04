@@ -1,6 +1,6 @@
 import { BLOCKS, MARKS } from "@contentful/rich-text-types";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 const options = {
   renderMark: {
     [MARKS.BOLD]: (text) => <strong>{text}</strong>,
@@ -36,10 +36,10 @@ const Email = ({ email, onClose, onSuccess, onFailure }) => {
       <div className="">{email.fromAddress}</div>
       <div className="">{email.subject}</div>
       <div className="">{documentToReactComponents(email.body, options)}</div>
-      <Button variant="contained" onClick={() => isPhish()}>
+      <Button variant="contained" color="warning" onClick={() => isPhish()}>
         Is Phish
       </Button>
-      <Button variant="contained" onClick={() => isNotPhish()}>
+      <Button variant="contained" color="info" onClick={() => isNotPhish()}>
         Is Not Phish
       </Button>
     </div>
