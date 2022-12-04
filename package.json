@@ -15,6 +15,7 @@
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.5",
     "@fontsource/roboto": "^4.5.8",
+    "@mui/icons-material": "^5.10.16",
     "@mui/material": "^5.10.16",
     "contentful": "^9.2.14",
     "eslint": "8.28.0",

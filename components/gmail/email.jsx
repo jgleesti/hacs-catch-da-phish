@@ -1,6 +1,15 @@
 import { BLOCKS, MARKS } from "@contentful/rich-text-types";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import Typography from "@mui/material/Typography";
+import ReplyIcon from "@mui/icons-material/Reply";
+import ForwardIcon from "@mui/icons-material/Forward";
+import SubjectLine from "./subject-line";
+import Toolbar from "./toolbar";
+import SendingDetails from "./sending-details";
 const options = {
   renderMark: {
     [MARKS.BOLD]: (text) => <strong>{text}</strong>,
@@ -10,14 +19,28 @@ const options = {
   },
 };
 
-const Email = ({ email, onClose, onSuccess, onFailure }) => {
+const style = (theme) => ({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  borderRadius: 8,
+  boxShadow: 24,
+  p: 4,
+  [theme.breakpoints.up("md")]: {
+    width: 850,
+  },
+});
+
+const Email = ({ email, onSuccess, onFailure, emailNumber, totalEmails }) => {
   const isNotPhish = () => {
     if (email.isPhish) {
       onFailure();
     } else {
       onSuccess();
     }
-    onClose();
   };
 
   const isPhish = () => {
@@ -26,23 +49,63 @@ const Email = ({ email, onClose, onSuccess, onFailure }) => {
     } else {
       onFailure();
     }
-    onClose();
   };
 
   return (
-    <div className="">
-      <button onClick={() => onClose()}>close</button>
-      <div className="">{email.fromName}</div>
-      <div className="">{email.fromAddress}</div>
-      <div className="">{email.subject}</div>
-      <div className="">{documentToReactComponents(email.body, options)}</div>
-      <Button variant="contained" color="warning" onClick={() => isPhish()}>
-        Is Phish
-      </Button>
-      <Button variant="contained" color="info" onClick={() => isNotPhish()}>
-        Is Not Phish
-      </Button>
-    </div>
+    <Box sx={style}>
+      <Toolbar emailNumber={emailNumber} totalEmails={totalEmails} />
+
+      <SubjectLine subject={email.subject} />
+
+      <SendingDetails
+        fromName={email.fromName}
+        fromAddress={email.fromAddress}
+      />
+
+      <Box style={{ marginLeft: "3.4em" }}>
+        {documentToReactComponents(email.body, options)}
+        <Box>
+          <Button
+            variant="outlined"
+            startIcon={<ReplyIcon />}
+            style={{
+              borderRadius: "25px",
+              marginRight: "1em",
+              textTransform: "none",
+            }}
+          >
+            Reply
+          </Button>
+          <Button
+            variant="outlined"
+            startIcon={<ForwardIcon />}
+            style={{ borderRadius: "25px", textTransform: "none" }}
+          >
+            Forward
+          </Button>
+        </Box>
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          "& > *": {
+            m: 1,
+          },
+        }}
+      >
+        <ButtonGroup variant="contained">
+          <Button color="warning" onClick={isPhish}>
+            Is Phish
+          </Button>
+          <Button color="info" onClick={isNotPhish}>
+            Is Not Phish
+          </Button>
+        </ButtonGroup>
+      </Box>
+    </Box>
   );
 };
 

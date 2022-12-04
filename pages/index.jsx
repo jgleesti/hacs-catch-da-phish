@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Head from "next/head";
+import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 import Email from "../components/gmail/email";
 const contentful = require("contentful");
 
@@ -11,23 +13,32 @@ export default function Home({ emails }) {
   const [currentScore, setCurrentScore] = useState(0);
   const [emailIndex, setEmailIndex] = useState(0);
 
+  const nextEmail = () => {
+    const newIndex = emailIndex + 1;
+    if (newIndex < emails.length) {
+      setEmailIndex(emailIndex + 1);
+    } else {
+      setEmailIndex(0);
+    }
+  };
+
   return (
     <Container maxWidth="xl">
       <Head>
         <title>Spot da phish</title>
         <meta
           name="description"
-          content="Taltech Humans Aspects of Cyber Security Assignment Four. An educational tool for Cyber Hygiene"
+          content="Taltech Humans Aspects of Cyber Security Assignment Four. An educational tool for cyber cygiene"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className="">
         <Typography variant="h1">Spot da phish</Typography>
-        <Typography variant="h2">
-          An educational tool for Cyber Hygiene
+        <Typography variant="h3">
+          An educational tool for cyber hygiene
         </Typography>
-        <Typography variant="h3">Total Score: {currentScore}</Typography>
+        <Typography variant="h4">Total Score: {currentScore}</Typography>
         <Button
           variant="contained"
           onClick={() => {
@@ -37,20 +48,28 @@ export default function Home({ emails }) {
           Start
         </Button>
         {showEmail && (
-          <Email
-            email={emails[emailIndex].fields}
+          <Modal
+            open={showEmail}
             onClose={() => {
               setShowEmail(false);
             }}
-            onSuccess={() => {
-              setCurrentScore(currentScore + 10);
-              setEmailIndex(emailIndex + 1);
-            }}
-            onFailure={() => {
-              setCurrentScore(currentScore - 10);
-              setEmailIndex(emailIndex + 1);
-            }}
-          />
+          >
+            <Box>
+              <Email
+                emailNumber={emailIndex + 1}
+                totalEmails={emails.length}
+                email={emails[emailIndex].fields}
+                onSuccess={() => {
+                  setCurrentScore(currentScore + 10);
+                  nextEmail();
+                }}
+                onFailure={() => {
+                  setCurrentScore(currentScore - 10);
+                  nextEmail();
+                }}
+              />
+            </Box>
+          </Modal>
         )}
       </main>
     </Container>
